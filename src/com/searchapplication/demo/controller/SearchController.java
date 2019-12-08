@@ -7,6 +7,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.searchapplication.demo.model.SearchModel;
 import com.searchapplication.demo.service.SearchService;
@@ -25,11 +26,12 @@ public class SearchController {
 	}
 	
 	@RequestMapping(value = "/search", method = RequestMethod.POST)
+	@ResponseBody
 	public String saveOrUpdateUser(@ModelAttribute("searchModel") SearchModel searchModel,
 			BindingResult result, Model model) {
 		System.out.println(searchModel);
-		searchService.getSearchResult(searchModel.getKeyword(), searchModel.getUrl());
-		return null;		
+		String searchCount = searchService.getSearchResult(searchModel.getKeyword(), searchModel.getUrl());
+		return 	searchCount;	
 	}
 
 }

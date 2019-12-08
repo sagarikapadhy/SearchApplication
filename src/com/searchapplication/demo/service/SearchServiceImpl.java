@@ -54,7 +54,7 @@ public class SearchServiceImpl implements SearchService {
 			final InputStream stream = connection.getInputStream();
 			String page = getString(stream);
 			
-			System.out.println("google result "+ page);
+	//		System.out.println("google result "+ page);
 			result = parseLinks(page,searchrl);
 			
 		} catch (MalformedURLException e) {
