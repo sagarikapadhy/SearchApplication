@@ -4,11 +4,11 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -34,24 +34,30 @@ public class SearchServiceImpl implements SearchService {
      * @return string searchResult. e.g "1,20" or "20"
      */
     @Override
-    public String getSearchResult(String keyword, String searchurl) {
+    public String getSearchResult(String keyword, String searchurl) throws Exception {
 
         String searchResult = "";
-        String res = "";
+
 
         LOGGER.info("keyword  " + keyword + "search url " + searchurl);
 
         if (keyword.contains(",")) {
             String[] keywords = keyword.split(",");
-            for (int i = 0; i < keywords.length; i++) {
+            for (String singleKeyword : keywords) {
 
-                res = doSearchInGoogle(keywords[i], searchurl);
-                searchResult += "," + res;
+                String res = doSearchInGoogle(singleKeyword, searchurl);
+                searchResult = res + "," + searchResult;
+
             }
+            searchResult = Optional.ofNullable(searchResult)
+                    .filter(sStr -> sStr.length() != 0)
+                    .map(sStr -> sStr.substring(0, sStr.length() - 1))
+                    .orElse(searchResult);
 
 
         } else {
             searchResult = doSearchInGoogle(keyword, searchurl);
+
 
         }
         return searchResult;
@@ -59,48 +65,36 @@ public class SearchServiceImpl implements SearchService {
     }
 
 
-    public String doSearchInGoogle(String keyword, String searchurl) {
+    private String doSearchInGoogle(String keyword, String searchurl) throws Exception {
 
         final String agent = "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)";
-        List<String> result = new ArrayList<String>();
+        List<String> result;
         String searchTerm = keyword.trim().replaceAll(" ", "+");
         String path = "https://www.google.com/search?q=" + searchTerm + "&num=100";
 
         LOGGER.info("Path " + searchurl);
 
         URL url;
-        try {
-            /**
-             * perform search in google
-             * returns result in html stream.
-             */
-            url = new URL(path);
-            final URLConnection connection = url.openConnection();
-            connection.setRequestProperty("User-Agent", agent);
-            final InputStream stream = connection.getInputStream();
+        /*
+          perform search in google
+          returns result in html stream.
+         */
+        url = new URL(path);
+        final URLConnection connection = url.openConnection();
+        connection.setRequestProperty("User-Agent", agent);
+        final InputStream stream = connection.getInputStream();
 
-            /**
-             * call getString() method
-             * to convert into a string
+            /*
+              call getString() method
+              to convert into a string
              */
-            String page = getString(stream);
+        String page = getString(stream);
 
-            /**
-             * call parseSearchResult() method
-             * parsing the html string using java regex
+            /*
+              call parseSearchResult() method
+              parsing the html string using java regex
              */
-            result = parseSearchResult(page, searchurl);
-
-        } catch (MalformedURLException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+        result = parseSearchResult(page, searchurl);
 
         return String.valueOf(result.size());
 
@@ -110,7 +104,7 @@ public class SearchServiceImpl implements SearchService {
     /**
      * getString() method
      */
-    public static String getString(InputStream is) {
+    private static String getString(InputStream is) {
         StringBuilder sb = new StringBuilder();
 
         BufferedReader br = new BufferedReader(new InputStreamReader(is));
@@ -122,13 +116,11 @@ public class SearchServiceImpl implements SearchService {
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
-            /** finally block to close the {@link BufferedReader} */
-            if (br != null) {
-                try {
-                    br.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+            /* finally block to close the {@link BufferedReader} */
+            try {
+                br.close();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         }
         return sb.toString();
@@ -139,8 +131,8 @@ public class SearchServiceImpl implements SearchService {
      * parseSearchResult() method do to regex
      */
 
-    public static List<String> parseSearchResult(final String html, String searchrl) throws Exception {
-        List<String> result = new ArrayList<String>();
+    private static List<String> parseSearchResult(final String html, String searchrl) throws Exception {
+        List<String> result = new ArrayList<>();
         String pattern1 = "<a href=\"/url?q=";
         String pattern2 = "\">";
         Pattern p = Pattern.compile(Pattern.quote(pattern1) + "(.*?)" + Pattern.quote(pattern2));

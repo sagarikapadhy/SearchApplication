@@ -1,10 +1,16 @@
 package com.searchapplication.demo.model;
 
+
+
+import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
 
+
 public class SearchModel implements Serializable{
-	
+
+	@NotEmpty
 	private String keyword;
+	@NotEmpty
 	private String url;
 	
 	public String getKeyword() {
