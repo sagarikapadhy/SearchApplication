@@ -17,9 +17,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class SearchServiceImpl implements SearchService {
 
-
     @Override
-    public String getSearchResult(String keyword, String searchrl) {
+    public String getSearchResult(String keyword, String searchurl) {
 
         String searchResult = "";
         String res = "";
@@ -27,26 +26,26 @@ public class SearchServiceImpl implements SearchService {
             String[] keywords = keyword.split(",");
             for (int i = 0; i < keywords.length; i++) {
 
-                res = search(keywords[i], searchrl);
+                res = doSearchInGoogle(keywords[i], searchurl);
                 searchResult += "," + res;
             }
             System.out.println("loop 1:" + searchResult);
 
         } else {
-            searchResult = search(keyword, searchrl);
+            searchResult = doSearchInGoogle(keyword, searchurl);
             System.out.println("loop 1 1:" + searchResult);
         }
         return searchResult;
 
     }
 
-    public String search(String keyword, String searchrl) {
+    public String doSearchInGoogle(String keyword, String searchurl) {
 
         final String agent = "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)";
         List<String> result = new ArrayList<String>();
         String searchTerm = keyword.trim().replaceAll(" ", "+");
-        System.out.println("searchTerm 2" + searchTerm);
         String path = "https://www.google.com/search?q=" + searchTerm + "&num=100";
+        System.out.println("search url " + path);
         URL url;
         try {
             url = new URL(path);
@@ -56,7 +55,7 @@ public class SearchServiceImpl implements SearchService {
             String page = getString(stream);
 
             //		System.out.println("google result "+ page);
-            result = parseLinks(page, searchrl);
+            result = parseSearchResult(page, searchurl);
 
         } catch (MalformedURLException e) {
             // TODO Auto-generated catch block
@@ -72,13 +71,6 @@ public class SearchServiceImpl implements SearchService {
         return String.valueOf(result.size());
 
     }
-
-    /**
-     * Convert stream to string
-     *
-     * @param is
-     * @return string
-     */
 
     public static String getString(InputStream is) {
         StringBuilder sb = new StringBuilder();
@@ -104,42 +96,25 @@ public class SearchServiceImpl implements SearchService {
         return sb.toString();
     }
 
-    /**
-     * Parse the url using regex
-     * 1. Parse the tag first
-     * 2. Then parse the url from the tag
-     *
-     * @param html,searchUrl
-     * @return resukt arrayList
-     */
 
-    public static List<String> parseLinks(final String html, String searchUrl) throws Exception {
-        final String HTML_A_TAG_PATTERN = "(?i)<a([^>]+)>(.+?)</a>";
-        final String HTML_A_HREF_TAG_PATTERN =
-                "\\s*(?i)href\\s*=\\s*(\"([^\"]*\")|'[^']*'|([^'\">\\s]+))";
+    public static List<String> parseSearchResult(final String html, String searchrl) throws Exception {
         List<String> result = new ArrayList<String>();
-        Pattern patternTag, patternLink;
-        Matcher matcherTag, matcherLink;
-        patternTag = Pattern.compile(HTML_A_TAG_PATTERN);
-        patternLink = Pattern.compile(HTML_A_HREF_TAG_PATTERN);
-        matcherTag = patternTag.matcher(html);
-        while (matcherTag.find()) {
+        String pattern1 = "<a href=\"/url?q=";
+        String pattern2 = "\">";
+        Pattern p = Pattern.compile(Pattern.quote(pattern1) + "(.*?)" + Pattern.quote(pattern2));
+        Matcher m = p.matcher(html);
 
-            String href = matcherTag.group(1);
-            matcherLink = patternLink.matcher(href);
-
-            while (matcherLink.find()) {
-                String link = matcherTag.group(1);
-                Pattern patternURL = Pattern.compile(searchUrl);
-                Matcher matcherURL = patternURL.matcher(link);
-                while (matcherURL.find()) {
-                    String domainName = matcherURL.group(0);
-                    result.add(domainName);
-                }
+        while (m.find()) {
+            String domainName = m.group(0);
+            Pattern urlPattern = Pattern.compile(Pattern.quote(searchrl));
+            Matcher urlMatcher = urlPattern.matcher(domainName);
+            while (urlMatcher.find()) {
+                String domain = urlMatcher.group(0);
+                result.add(domain);
             }
+
         }
         return result;
     }
 
 }
-
