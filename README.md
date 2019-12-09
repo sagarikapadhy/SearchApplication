@@ -23,10 +23,6 @@
 
 
 
-[![INSERT YOUR GRAPHIC HERE](http://i.imgur.com/dt8AUb6.png)]()
-
-
-
 
 **How To run on AWS**
 
@@ -40,27 +36,11 @@
 
 - [Installation](#installation)
 - [Features](#features)
-- [Contributing](#contributing)
-- [Team](#team)
 - [FAQ](#faq)
 - [Support](#support)
 - [License](#license)
 
 
----
-
-## Example (Optional)
-
-```javascript
-// code away!
-
-let generateProject = project => {
-  let code = [];
-  for (let js = 0; js < project.length; js++) {
-    code.push(js);
-  }
-};
-```
 
 ---
 
