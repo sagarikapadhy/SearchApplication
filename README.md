@@ -1,25 +1,16 @@
-<a href="http://fvcproductions.com"><img src="https://avatars1.githubusercontent.com/u/4284691?v=3&s=200" title="FVCproductions" alt="FVCproductions"></a>
+<a href="https://www.google.com/imgres?imgurl=https%3A%2F%2Fpngriver.com%2Fwp-content%2Fuploads%2F2018%2F04%2FDownload-Search-Button-Png-Image-70612-For-Designing-Projects.png&imgrefurl=https%3A%2F%2Fpngriver.com%2Fdownload-search-button-png-image-70612-for-designing-projects-115283%2F&tbnid=Zk4W_dPY1uV0jM&vet=1&docid=FOviH7LdxeGAyM&w=512&h=512&itg=1&q=search%20application&source=sh%2Fx%2Fim"><img src="https://www.google.com/imgres?imgurl=https%3A%2F%2Fpngriver.com%2Fwp-content%2Fuploads%2F2018%2F04%2FDownload-Search-Button-Png-Image-70612-For-Designing-Projects.png&imgrefurl=https%3A%2F%2Fpngriver.com%2Fdownload-search-button-png-image-70612-for-designing-projects-115283%2F&tbnid=Zk4W_dPY1uV0jM&vet=1&docid=FOviH7LdxeGAyM&w=512&h=512&itg=1&q=search%20application&source=sh%2Fx%2Fim" title="SearchApplication" alt="SearchApplication"></a>
 
-<!-- [![FVCproductions](https://avatars1.githubusercontent.com/u/4284691?v=3&s=200)](http://fvcproductions.com) -->
+
 
 
 
 # Search Application Test
 
+> software  that  receives  a  string  of  keywords,  and  a  string  URL.  This  is then  processed  to  return  a  string  of  numbers  for  where  the  resulting  URL  is  found  in  the  Google results. For  example,  “1,  10,  33”  or  “0”. 
+
 > 
 
-> ideally one sentence
-
-> include terms/tags that can be searched
-
-**Badges will go here**
-
-- build status
-
-- license
-- etc.
-
-[![Build Status](http://img.shields.io/travis/badges/badgerbadgerbadger.svg?style=flat-square)](https://travis-ci.org/badges/badgerbadgerbadger) [![Dependency Status](http://img.shields.io/gemnasium/badges/badgerbadgerbadger.svg?style=flat-square)](https://gemnasium.com/badges/badgerbadgerbadger) [![Coverage Status](http://img.shields.io/coveralls/badges/badgerbadgerbadger.svg?style=flat-square)](https://coveralls.io/r/badges/badgerbadgerbadger) [![Code Climate](http://img.shields.io/codeclimate/github/badges/badgerbadgerbadger.svg?style=flat-square)](https://codeclimate.com/github/badges/badgerbadgerbadger) [![Github Issues](http://githubbadges.herokuapp.com/badges/badgerbadgerbadger/issues.svg?style=flat-square)](https://github.com/badges/badgerbadgerbadger/issues) [![Pending Pull-Requests](http://githubbadges.herokuapp.com/badges/badgerbadgerbadger/pulls.svg?style=flat-square)](https://github.com/badges/badgerbadgerbadger/pulls) [![Gem Version](http://img.shields.io/gem/v/badgerbadgerbadger.svg?style=flat-square)](https://rubygems.org/gems/badgerbadgerbadger) [![License](http://img.shields.io/:license-mit-blue.svg?style=flat-square)](http://badges.mit-license.org) [![Badges](http://img.shields.io/:badges-9/9-ff6799.svg?style=flat-square)](https://github.com/badges/badgerbadgerbadger)
+>  http://searchapplication-env.mzq5k9k6xu.us-east-2.elasticbeanstalk.com/
 
 
 
@@ -54,23 +45,56 @@
 
 - Clone this repo to your local machine using `https://github.com/sagarikapadhy/searchapplication.git`
 
-### Setup
+### How To Use
 
-- If you want more syntax highlighting, format your code like this:
 
-> update and install this package first
-
-```shell
-$ brew update
-$ brew install fvcproductions
-```
-
-> now install npm and bower packages
+> steps
 
 ```shell
-$ npm install
-$ bower install
+
+Run the web app on your local or hit the cloud url.
+Enter the keywords to be searched in comma separated(for multiple)
+Enter the url to be parsed and count
+Press Seach button
+Result will be displayed in a pop up window.
 ```
+
+> Sequence Algorithm
+
+```shell
+When a user runs the app or open the cloud url
+
+If keyword field is not empty(){
+   if url is not empty(){
+      search would call a background mvc api call
+      if multiple keyword with comma separated(){
+         split each word.execute in a loop
+            call doSearch()
+            display result on screen
+      }
+            
+      else
+         call doSearch()
+         display result on screen
+   }
+   display error message
+}
+display error message
+
+doSearch(){
+ 
+   Build google search url with inputs. search result max set to 100 per page.
+   if success(){
+     convert the html stream to string
+     parse the string using regex.extract all the hrefs.
+     regex again for the input url
+     add to a list
+     return size of list.
+  }
+      
+
+
+
 
 - For all the possible languages that support syntax highlithing on GitHub (which is basically all of them), refer <a href="https://github.com/github/linguist/blob/master/lib/linguist/languages.yml" target="_blank">here</a>.
 
