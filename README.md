@@ -1,5 +1,4 @@
-<a href="https://www.google.com/imgres?imgurl=https%3A%2F%2Fpngriver.com%2Fwp-content%2Fuploads%2F2018%2F04%2FDownload-Search-Button-Png-Image-70612-For-Designing-Projects.png&imgrefurl=https%3A%2F%2Fpngriver.com%2Fdownload-search-button-png-image-70612-for-designing-projects-115283%2F&tbnid=Zk4W_dPY1uV0jM&vet=1&docid=FOviH7LdxeGAyM&w=512&h=512&itg=1&q=search%20application&source=sh%2Fx%2Fim"><img src="https://www.google.com/imgres?imgurl=https%3A%2F%2Fpngriver.com%2Fwp-content%2Fuploads%2F2018%2F04%2FDownload-Search-Button-Png-Image-70612-For-Designing-Projects.png&imgrefurl=https%3A%2F%2Fpngriver.com%2Fdownload-search-button-png-image-70612-for-designing-projects-115283%2F&tbnid=Zk4W_dPY1uV0jM&vet=1&docid=FOviH7LdxeGAyM&w=512&h=512&itg=1&q=search%20application&source=sh%2Fx%2Fim" title="SearchApplication" alt="SearchApplication"></a>
-
+ ![alt text] (https://logos-download.com/wp-content/uploads/2016/10/Java_logo_icon.png)
 
 
 
@@ -26,7 +25,8 @@
 > If your `README` has a lot of info, section headers might be nice.
 
 - [Installation](#installation)
-- [Features](#features)
+- [Clone](#clone)
+- [HowToUse](#howtouse)
 - [FAQ](#faq)
 - [Support](#support)
 - [License](#license)
@@ -45,18 +45,18 @@
 
 - Clone this repo to your local machine using `https://github.com/sagarikapadhy/searchapplication.git`
 
-### How To Use
+### HowToUse
 
 
 > steps
 
 ```shell
 
-Run the web app on your local or hit the cloud url.
-Enter the keywords to be searched in comma separated(for multiple)
-Enter the url to be parsed and count
-Press Seach button
-Result will be displayed in a pop up window.
+> Run the web app on your local or hit the cloud url.
+> Enter the keywords to be searched in comma separated(for multiple)
+> Enter the url to be parsed and count
+> Press Seach button
+> Result will be displayed in a pop up window.
 ```
 
 > Sequence Algorithm
@@ -100,13 +100,23 @@ doSearch(){
 
 ---
 
-## Features
-## Usage (Optional)
-## Documentation (Optional)
-## Tests (Optional)
+## Documentation
 
 - Going into more detail on code and technologies used
 - `README`.
+
+
+## Tests 
+
+```shell
+
+> Used Junit and mockito framework for unit test.
+> Selenium can be used for UI level testing. Need more time.
+> jscoup third party library can be used to verify result with regex impl.
+
+```
+
+
 
 ---
 
