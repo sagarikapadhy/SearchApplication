@@ -82,5 +82,18 @@ public class TestSearchApplication {
         assertEquals("3", result); // mocking the result to 3
     }
 
+    @Test
+    public void testMultipleKeywords() throws Exception {
+        searchModel = new SearchModel();
+        searchModel.setKeyword("online title search,online title");
+        searchModel.setUrl("www.infotrack.com.au");
+        Mockito.when(mockBindingResult.hasErrors()).thenReturn(false);
+        Mockito.when(mockSearchService.getSearchResult(searchModel.getKeyword(), searchModel.getUrl()))
+                .thenReturn("3,2");
+        String result = mockSearchService.getSearchResult(searchModel.getKeyword(), searchModel.getUrl());
+        assertNotNull(result);
+        assertEquals("3,2", result); // mocking the result to 3
+    }
+
 
 }
