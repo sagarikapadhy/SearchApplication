@@ -16,11 +16,11 @@
 **How To run on AWS**
 Make sure access to AWS console. 
 
-![Recordit GIF](http://g.recordit.co/he2fSQSz6V.gif)
+![Recordit GIF](http://g.recordit.co/YyXCYojBOt.gif)
 
 
 
-## Table of Contents (Optional)
+## Table of Contents 
 
 > If your `README` has a lot of info, section headers might be nice.
 
