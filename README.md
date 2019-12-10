@@ -14,9 +14,11 @@
 ![Recordit GIF](http://g.recordit.co/E0FriUGC7Q.gif)
 
 **How To run on AWS**
-Make sure access to AWS console. 
+
 
 ![Recordit GIF](http://g.recordit.co/YyXCYojBOt.gif)
+![Recordit GIF](http://g.recordit.co/vrp3KUlu3l.gif)
+![Recordit GIF](http://g.recordit.co/gW1NuJkjc6.gif)
 
 
 
