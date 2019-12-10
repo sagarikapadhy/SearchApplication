@@ -25,7 +25,7 @@ public class SearchController {
     private SearchService searchService;
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    public String index(Model model) {
+    public String showIndexPage(Model model) {
         SearchModel searchModel = new SearchModel();
         model.addAttribute("searchModel", searchModel);
         return "index";

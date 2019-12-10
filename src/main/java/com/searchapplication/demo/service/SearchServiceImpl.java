@@ -8,7 +8,6 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -37,7 +36,8 @@ public class SearchServiceImpl implements SearchService {
     public String getSearchResult(String keyword, String searchurl) throws Exception {
 
         String searchResult = "";
-
+        StringBuilder builder = new StringBuilder();
+        String delim = "";
 
         LOGGER.info("keyword  " + keyword + "search url " + searchurl);
 
@@ -45,15 +45,11 @@ public class SearchServiceImpl implements SearchService {
             String[] keywords = keyword.split(",");
             for (String singleKeyword : keywords) {
 
-                String res = doSearchInGoogle(singleKeyword, searchurl);
-                searchResult = res + "," + searchResult;
-
+                builder.append(delim);
+                delim = ",";
+                builder.append(doSearchInGoogle(singleKeyword, searchurl));
             }
-            searchResult = Optional.ofNullable(searchResult)
-                    .filter(sStr -> sStr.length() != 0)
-                    .map(sStr -> sStr.substring(0, sStr.length() - 1))
-                    .orElse(searchResult);
-
+            searchResult = builder.toString();
 
         } else {
             searchResult = doSearchInGoogle(keyword, searchurl);
